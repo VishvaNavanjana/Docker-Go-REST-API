@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/codes"
 )
 
 
@@ -19,11 +20,14 @@ func ListFacts(c *fiber.Ctx) error {
     tracer := otel.Tracer("ListFacts")
     _, span := tracer.Start(ctx, "ListFacts")
 
+    //aet error code as true for testing
+    span.SetStatus(codes.Error, "test error in list facts")
+
     facts := []models.Fact{}
     database.DB.Db.Find(&facts)
 
     //add a delay to simulate a slow operation
-    time.Sleep(5 * time.Second)
+    time.Sleep(2 * time.Second)
 
     // End the span
     defer span.End()
@@ -39,6 +43,10 @@ func CreateFact(c *fiber.Ctx) error {
 
     fact := new(models.Fact)
     if err := c.BodyParser(fact); err != nil {
+        //record error in the span
+        span.RecordError(err)
+		span.SetStatus(codes.Error, err.Error())
+
         return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
             "message": err.Error(),
         })
