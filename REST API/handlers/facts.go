@@ -1,12 +1,13 @@
 package handlers
 
 import (
+	"time"
+
 	"github.com/VishvaNavanjana/Docker-Go-REST-API/database"
 	"github.com/VishvaNavanjana/Docker-Go-REST-API/models"
 	"github.com/gofiber/fiber/v2"
 
 	"go.opentelemetry.io/otel"
-
 )
 
 
@@ -20,6 +21,9 @@ func ListFacts(c *fiber.Ctx) error {
 
     facts := []models.Fact{}
     database.DB.Db.Find(&facts)
+
+    //add a delay to simulate a slow operation
+    time.Sleep(5 * time.Second)
 
     // End the span
     defer span.End()
