@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/VishvaNavanjana/Docker-Go-REST-API/database"
-	"github.com/divrhino/divrhino-trivia/database"
 	"github.com/gofiber/fiber/v2"
 )
 
