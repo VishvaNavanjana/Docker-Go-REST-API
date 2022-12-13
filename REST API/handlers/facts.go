@@ -12,12 +12,12 @@ import (
 )
 
 
-
+const name = "Facts"
 
 func ListFacts(c *fiber.Ctx) error {
     // Create a span for the operation
     ctx := c.Context()
-    tracer := otel.Tracer("ListFacts")
+    tracer := otel.Tracer(name)
     _, span := tracer.Start(ctx, "ListFacts")
 
     //aet error code as true for testing
@@ -38,7 +38,7 @@ func ListFacts(c *fiber.Ctx) error {
 func CreateFact(c *fiber.Ctx) error {
     // Create a span for the operation
     ctx := c.Context()
-    tracer := otel.Tracer("CreateFact")
+    tracer := otel.Tracer(name)
     _, span := tracer.Start(ctx, "CreateFact")
 
     fact := new(models.Fact)

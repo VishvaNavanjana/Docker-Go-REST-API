@@ -34,7 +34,9 @@ func tracerProvider(url string) (*tracesdk.TracerProvider, error) {
 	}
 	tp := tracesdk.NewTracerProvider(
 		// Always be sure to batch in production.
-		tracesdk.WithBatcher(exp),
+
+		tracesdk.WithSyncer(exp),
+
 		// Record information about this application in a Resource.
 		tracesdk.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
