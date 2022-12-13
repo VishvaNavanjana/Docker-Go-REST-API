@@ -9,7 +9,15 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+
+	"context"
+
+	"go.opentelemetry.io/otel"
+
 )
+
+//// name is the Tracer name used to identify this instrumentation library.
+const name = "database"
 
 type Dbinstance struct {
     Db *gorm.DB
@@ -18,6 +26,12 @@ type Dbinstance struct {
 var DB Dbinstance
 
 func ConnectDb() {
+    // Create a span for the operation
+    ctx := context.Background()
+    tracer := otel.Tracer(name)
+    _, span := tracer.Start(ctx, "ConnectDb")
+
+
     dsn := fmt.Sprintf(
         "host=db user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Shanghai",
         os.Getenv("DB_USER"),
@@ -35,6 +49,10 @@ func ConnectDb() {
     }
 
     log.Println("connected")
+
+    // End the span
+    defer span.End()
+
     db.Logger = logger.Default.LogMode(logger.Info)
 
     log.Println("running migrations")
