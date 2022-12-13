@@ -12,6 +12,8 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+
+	// "github.com/gofiber/contrib/otelfiber"
 )
 
 
@@ -33,7 +35,6 @@ func tracerProvider(url string) (*tracesdk.TracerProvider, error) {
 		return nil, err
 	}
 	tp := tracesdk.NewTracerProvider(
-		// Always be sure to batch in production.
 
 		tracesdk.WithSyncer(exp),
 
@@ -66,6 +67,9 @@ func main() {
 
 	database.ConnectDb()
 	app := fiber.New()
+
+	// use otel middleware for automatic instrumentation
+	// app.Use(otelfiber.Middleware("traces-mvp-rest-api", otelfiber.WithTracerProvider(tp)))
 
 	setupRoutes(app)
 
