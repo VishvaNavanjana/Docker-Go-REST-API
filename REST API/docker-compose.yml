@@ -10,6 +10,8 @@ services:
     volumes:
       - .:/usr/src/app
     command: air cmd/main.go -b 0.0.0.0
+    networks:
+    - tracing
   db:
     image: postgres:alpine
     environment:
@@ -20,6 +22,24 @@ services:
       - "5432:5432"
     volumes:
       - postgres-db:/var/lib/postgresql/data
+    networks:
+    - tracing
+  # integrate jaeger
+  jaeger:
+    image: jaegertracing/all-in-one:1.21
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
     
+    
+    networks:
+    - tracing
+
+networks:
+  tracing:
+    name: tracing
+
 volumes:
   postgres-db:

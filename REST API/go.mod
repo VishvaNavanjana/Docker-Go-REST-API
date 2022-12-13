@@ -3,8 +3,18 @@ module github.com/VishvaNavanjana/Docker-Go-REST-API
 go 1.19
 
 require (
+	github.com/gofiber/fiber/v2 v2.40.1
+	go.opentelemetry.io/otel v1.11.2
+	go.opentelemetry.io/otel/exporters/jaeger v1.11.2
+	go.opentelemetry.io/otel/sdk v1.11.2
+	gorm.io/driver/postgres v1.4.5
+	gorm.io/gorm v1.24.2
+)
+
+require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/gofiber/fiber/v2 v2.40.1 // indirect
+	github.com/go-logr/logr v1.2.3 // indirect
+	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.13.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
@@ -23,9 +33,8 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.41.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
+	go.opentelemetry.io/otel/trace v1.11.2 // indirect
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
-	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab // indirect
+	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	gorm.io/driver/postgres v1.4.5 // indirect
-	gorm.io/gorm v1.24.2 // indirect
 )
